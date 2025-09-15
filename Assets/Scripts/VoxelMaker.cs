@@ -1,4 +1,4 @@
-using System;
+//using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,7 +33,7 @@ public class VoxelMaker : MonoBehaviour
 
             //색상 램덤으로 생성하여 넣기
             MeshRenderer Render = voxel.GetComponent<MeshRenderer>();
-            Render.material.color = UnityEngine.Random.ColorHSV();
+            Render.material.color = Random.ColorHSV(); //왜 그냥 Random 을 쓰면 안될까?? - 찾아보기 using system을 지우면 그냥 Random이 가능해짐_ .net이랑 유니티에서 둘 다 제공하기 때문일 걸로 추측
             
             //복셀 비활성화
             voxel.SetActive(false);
