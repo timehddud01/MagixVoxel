@@ -5,15 +5,16 @@ using UnityEngine;
 public class Voxel : MonoBehaviour
 {
     public float speed = 5;
-    public float destroyTime = 5.0f; // ÆÄ±«ÇÒ½Ã°£
-    float currentTime = 0; //ÇöÀç ½Ã°£
+    public float destroyTime = 5.0f; // ï¿½Ä±ï¿½ï¿½Ò½Ã°ï¿½
+    float currentTime = 0; //ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
 
     // Start is called before the first frame update
 
 
-    void Start()
+    void OnEnable() //start ëŒ€ì‹ ì— í™œì„±í™” ë˜ë©´ ì‹¤í–‰ë˜ë„ë¡
     {
-        Vector3 direction = Random.insideUnitSphere; //Å©±â°¡ 1ÀÌ°í ¹æÇâ¸¸ Á¸ÀçÇÔ
+        currentTime = 0; //ì‹œì‘ í›„ ì‹œê°„ì´ ì•„ë‹Œ ì‹¤í–‰ í›„ ì‹œê°„
+        Vector3 direction = Random.insideUnitSphere; //Å©ï¿½â°¡ 1ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½â¸¸ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         rb.velocity = direction * speed; 
     }
@@ -21,11 +22,13 @@ public class Voxel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //ÀÏÁ¤ ½Ã°£ÀÌ Áö³ª¸é »èÁ¦ÇÏ±â
-        currentTime += Time.deltaTime; //ÇöÀç ½Ã°£ ´©Àû(ÇÁ·¹ÀÓ ±âÁØ °æ°ú½Ã°£)
-        if (currentTime > destroyTime) //½Ã°£ ÃÊ°ú ÇßÀ» ¶§
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+        currentTime += Time.deltaTime; //ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã°ï¿½)
+        if (currentTime > destroyTime) //ï¿½Ã°ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
         {
-            Destroy(gameObject); //ÀÚ½ÅÀ» ÆÄ±«ÇÑ´Ù.
+            gameObject.SetActive(false); //ìê¸° ìì‹ ì„ gameobjectë¡œ ì§€ì¹­
+            VoxelMaker.voxelPool.Add(gameObject); //VoxelMaker ìŠ¤í¬ë¦½íŠ¸ì—ì„œ ë§Œë“  voxelPoolì„ ê°€ì ¸ì˜¤ê³  ìê¸°ìì‹ (voxel)ì„ ì¶”ê°€í•¨
+            //Destroy(gameObject); //ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½Ä±ï¿½ï¿½Ñ´ï¿½.
         }
         
     }
