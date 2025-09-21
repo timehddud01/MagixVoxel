@@ -20,7 +20,12 @@ public class VoxelMaker : MonoBehaviour
 
     //오브젝트 풀
     //static : 정적변수  = 전체 통틀어서 하나만 생성, 즉 코드 실행 시 생성되는 값이 아닌, 전체에서 유일하게 존재하게 됨 
-    public static List<GameObject> voxelPool = new List<GameObject>(); //General의 개념 확실히 공부하기
+    public static List<GameObject> voxelPool = new List<GameObject>(); //Generic 은 <>인데, 괄호 안에 속성을 명시해 줌으로써 리스트가 담을 데이터를 지정함
+    //장점 : 
+    // 1. 메모리 크기 결정: 리스트에 데이터를 저장하려면 얼마나 많은 메모리 공간이 필요한지 알아야 합니다. GameObject와 int(정수)는 차지하는 메모리 크기가 다릅니다. 타입을 지정해 줘야 컴파일러가 효율적으로 메모리를 할당할 수 있습니다.
+    // 2.타입 안정성 보장: 제네릭의 핵심적인 장점입니다. List<GameObject>라고 지정하는 순간, 프로그래머는 "이 리스트에는 GameObject만 들어있다"고 보장받게 됩니다. 만약 실수로 다른 것을 넣으려고 하면 컴파일러가 즉시 에러를 알려줘서 버그를 막아줍니다.
+    
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +37,7 @@ public class VoxelMaker : MonoBehaviour
 
 
             //색상 램덤으로 생성하여 넣기
-            MeshRenderer Render = voxel.GetComponent<MeshRenderer>();
+            MeshRenderer Render = voxel.GetComponent<MeshRenderer>(); //GetComponent는 속성을 가져오고, 바꿀 수 있는 리모컨. Reference의 개념
             Render.material.color = Random.ColorHSV(); //왜 그냥 Random 을 쓰면 안될까?? - 찾아보기 using system을 지우면 그냥 Random이 가능해짐_ .net이랑 유니티에서 둘 다 제공하기 때문일 걸로 추측
             
             //복셀 비활성화
@@ -47,13 +52,13 @@ public class VoxelMaker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1")) //기본 설정 : 왼쪽 마우스, 왼쪽 Ctrl
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo = new RaycastHit();
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //메인 카메라에서 마우스 커서 위치를 뚫고 나가는 가상의 광선(Ray)를 생성
+            RaycastHit hitInfo = new RaycastHit(); //충돌한 물체의 이름, 충동 지점의 좌표, 충돌 지점까지의 거리 등 저장! 새 보고서를 만들고 그걸 hitInfo에 담자. 
 
             //마우스의 위치가 바닥 위에 위치해 있다면
-            if (Physics.Raycast(ray, out hitInfo))
+            if (Physics.Raycast(ray, out hitInfo)) //physics.raycast는 발사, ray는 true인지 false인지(부딪혔는지 아닌지), 부딪힌 기록(hitInfo)은 out으로 빼달라는 뜻
             {
                 if (voxelPool.Count > 0)//오브젝트 풀 안에 복셀이 있는지 확인하고!
                 {
