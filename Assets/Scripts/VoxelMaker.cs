@@ -9,10 +9,13 @@ public class VoxelMaker : MonoBehaviour
     //생성할 대상 등록
 
     public GameObject voxelFactory;
-
+    float currentTime = 0; //자동 생성을 위한 시간 
+    float createTime = 0.1f; //0.1초마다 자동 생성
 
     //메모리 누수방지를 위해 pool 생성
 
+    //크로스헤어 변수
+    public Transform crosshair;
 
 
     //오브젝트 풀의 크기
@@ -51,24 +54,40 @@ public class VoxelMaker : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        if (Input.GetButtonDown("Fire1")) //기본 설정 : 왼쪽 마우스, 왼쪽 Ctrl
+    {   
+        //크로스헤어 그리기
+        ARAVRInput.DrawCrosshair(crosshair);
+        
+        //if (Input.GetButtonDown("Fire1")) //기본 설정 : 왼쪽 마우스, 왼쪽 Ctrl
+        if (ARAVRInput.Get(ARAVRInput.Button.One)) //오큘러스 입력 가져오기
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //메인 카메라에서 마우스 커서 위치를 뚫고 나가는 가상의 광선(Ray)를 생성
-            RaycastHit hitInfo = new RaycastHit(); //충돌한 물체의 이름, 충동 지점의 좌표, 충돌 지점까지의 거리 등 저장! 새 보고서를 만들고 그걸 hitInfo에 담자. 
-
-            //마우스의 위치가 바닥 위에 위치해 있다면
-            if (Physics.Raycast(ray, out hitInfo)) //physics.raycast는 발사, ray는 true인지 false인지(부딪혔는지 아닌지), 부딪힌 기록(hitInfo)은 out으로 빼달라는 뜻
+            currentTime+=Time.deltaTime;
+            if (currentTime>createTime)
             {
-                if (voxelPool.Count > 0)//오브젝트 풀 안에 복셀이 있는지 확인하고!
-                {
-                    GameObject voxel = voxelPool[0];                    //복셀 풀 최상단의 값을 가져오고
-                    voxel.SetActive(true);                              //복셀을 활성화함
-                    voxel.transform.position = hitInfo.point;           //Raycast를 통해 얻은 충돌지점의 위치로 객체를 이동(instantiate이 아님! 풀을 사용하게 되면서 비활성화 한 것을 가져오기만 하면 되는 것임)
-                    voxelPool.RemoveAt(0);                              //오브젝트 풀에서 맨 위에 있는 voxel 1개 제거
+            
+                //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //메인 카메라에서 마우스 커서 위치를 뚫고 나가는 가상의 광선(Ray)를 생성
+                //RaycastHit hitInfo = new RaycastHit(); //충돌한 물체의 이름, 충동 지점의 좌표, 충돌 지점까지의 거리 등 저장! 새 보고서를 만들고 그걸 hitInfo에 담자. 
 
+                Ray ray  =new Ray(ARAVRInput.RHandPosition,ARAVRInput.RHandDirection);
+                RaycastHit hitInfo = new RaycastHit();
+
+                //마우스의 위치가 바닥 위에 위치해 있다면
+                if (Physics.Raycast(ray, out hitInfo)) //physics.raycast는 발사, ray는 true인지 false인지(부딪혔는지 아닌지), 부딪힌 기록(hitInfo)은 out으로 빼달라는 뜻
+                {
+                    if (voxelPool.Count > 0)//오브젝트 풀 안에 복셀이 있는지 확인하고!
+                    {
+                    
+
+                        GameObject voxel = voxelPool[0];                    //복셀 풀 최상단의 값을 가져오고
+                        voxel.SetActive(true);                              //복셀을 활성화함
+                        voxel.transform.position = hitInfo.point;           //Raycast를 통해 얻은 충돌지점의 위치로 객체를 이동(instantiate이 아님! 풀을 사용하게 되면서 비활성화 한 것을 가져오기만 하면 되는 것임)
+                        voxelPool.RemoveAt(0);       //오브젝트 풀에서 맨 위에 있는 voxel 1개 제거
+                        currentTime =0;                       
+
+                    }
                 }
             }
+            
         }
     }
 }
