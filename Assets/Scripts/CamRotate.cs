@@ -7,32 +7,32 @@ public class CamRotate : MonoBehaviour
     Vector3 angle;
     public float sensitivity = 200;
 
-//¿òÁ÷ÀÎ ¸¸Å­¸¸ È¸ÀüÇÏµµ·Ï
+//ì›€ì§ì¸ ë§Œí¼ë§Œ íšŒì „í•˜ë„ë¡
 
 
     // Start is called before the first frame update
     void Start()
     {
         angle = Camera.main.transform.eulerAngles;
-        angle.x *= -1; //¹İÀü : Ä«¸Ş¶ó°¡ ¹Ù¶óº¸´Â ¹æÇâ(Ä«¸Ş¶ó xÃàÀÇ ¹İ´ëÀÓ)
+        angle.x *= -1; //ë°˜ì „ : ì¹´ë©”ë¼ê°€ ë°”ë¼ë³´ëŠ” ë°©í–¥(ì¹´ë©”ë¼ xì¶•ì˜ ë°˜ëŒ€ì„)
     }
 
     // Update is called once per frame
     void Update()
     {
-    //¸¶¿ì½º Á¤º¸ ÀÔ·Â
+    //ë§ˆìš°ìŠ¤ ì •ë³´ ì…ë ¥
     float x = Input.GetAxis("Mouse Y");
     float y = Input.GetAxis("Mouse X");
-    //¹æÇâÈ®ÀÎ
-    angle.x += x * sensitivity * Time.deltaTime; //Á¶±İ¸¸ ¿òÁ÷¿©µµ Àß È¸ÀüÇÏµµ·Ï ¹Î°¨µµ¸¦ Ãß°¡
+    //ë°©í–¥í™•ì¸
+    angle.x += x * sensitivity * Time.deltaTime; //ì¡°ê¸ˆë§Œ ì›€ì§ì—¬ë„ ì˜ íšŒì „í•˜ë„ë¡ ë¯¼ê°ë„ë¥¼ ì¶”ê°€
     angle.y += y * sensitivity * Time.deltaTime;
     angle.z = transform.eulerAngles.z;
 
-    //»óÇÏ °¢µµ Á¦ÇÑ
-    angle.x = Mathf.Clamp(angle.x, -90,90); //clamp´Â ¹üÀ§ Á¶Àı
-    //È¸Àü(Ä«¸Ş¶ó¿¡ Àû¿ë)
+    //ìƒí•˜ ê°ë„ ì œí•œ
+    angle.x = Mathf.Clamp(angle.x, -90,90); //clampëŠ” ë²”ìœ„ ì¡°ì ˆ
+    //íšŒì „(ì¹´ë©”ë¼ì— ì ìš©)
 
-    //»ı¼ºÀÚÀÇ °³³ä ÀÌ ÁÙÀº ¾öÃ» °£¼ÒÇÏ°Ô µÇ¾îÀÖ´Â °ÍÀÓ(ÀÌ·¸°Ô ÇÏÁö ¾ÊÀ¸¸é ¿Ö ¸Ş¸ğ¸® ´©¼öÀÎÁö, ¿Ö ÀÌ ÁÙÀ» »ç¿ëÇÏ´ÂÁö)
+    //ìƒì„±ìì˜ ê°œë… ì´ ì¤„ì€ ì—„ì²­ ê°„ì†Œí•˜ê²Œ ë˜ì–´ìˆëŠ” ê²ƒì„(ì´ë ‡ê²Œ í•˜ì§€ ì•Šìœ¼ë©´ ì™œ ë©”ëª¨ë¦¬ ëˆ„ìˆ˜ì¸ì§€, ì™œ ì´ ì¤„ì„ ì‚¬ìš©í•˜ëŠ”ì§€)
     transform.eulerAngles = new Vector3(-angle.x,angle.y,transform.eulerAngles.z);
     
     

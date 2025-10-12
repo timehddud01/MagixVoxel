@@ -59,9 +59,9 @@ public static class ARAVRInput //받은 입력을 다른 곳에서 받아갈 수
     }
 # endif
 
-    // ���� ��Ʈ�ѷ�
+    // 왼쪽 컨트롤러
     static Transform lHand; //public 차이로 l과 L. 외부에서 접근, 바꿀 수 없게 하기 위해서.
-    // ���� ��ϵ� ���� ��Ʈ�ѷ��� ã�� ��ȯ
+    // 씬에 등록된 왼쪽 컨트롤러를 찾아 변환
     public static Transform LHand // 이 녀석은 외부에서 바꿀 수 있음. lhand와 비교. 이 두 줄이 중요함.
     {//외부에서 받아온 것을 lhand와 비교
         get 
@@ -69,9 +69,9 @@ public static class ARAVRInput //받은 입력을 다른 곳에서 받아갈 수
             if (lHand == null)
             {
 #if PC
-                // LHand��� �̸����� ���� ������Ʈ�� �����.
+                // LHand라는 이름으로 게임 오브젝트를 만든다.
                 GameObject handObj = new GameObject("LHand");
-                // ������� ��ü�� Ʈ�������� lHand�� �Ҵ�
+                // 만들어진 객체의 트랜스폰을 Lhand에 할당
                 lHand = handObj.transform;
                 // ��Ʈ�ѷ��� ī�޶��� �ڽ� ��ü�� ���
                 lHand.parent = Camera.main.transform;
