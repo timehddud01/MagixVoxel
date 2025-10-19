@@ -15,6 +15,7 @@ public class Voxel : MonoBehaviour
     {
         currentTime = 0; //시작 후 시간이 아닌 실행 후 시간
         Vector3 direction = Random.insideUnitSphere;  // 반지름이 1인 가상의 구 생성, 그 내부의 임의의 점을 반환. 즉 0과 1 사이 랜덤한 방향과 크기를 가짐
+        //Vector3이기 때문에 3차원 좌표계에서의 방향을 나타냄
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         rb.velocity = direction * speed;                           //velocity 는 AddForce와는 다름. AddForce는 밀어주는 것. velocity는 발사 !
     }

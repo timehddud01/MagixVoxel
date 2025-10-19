@@ -13,7 +13,7 @@ public class CamRotate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        angle = Camera.main.transform.eulerAngles;
+        angle = Camera.main.transform.eulerAngles; //게임을 시작하자마자 카메라의 초기 회전 값을 angle 변수에 백업해두겠다
         angle.x *= -1; //반전 : 카메라가 바라보는 방향(카메라 x축의 반대임)
     }
 
@@ -24,9 +24,10 @@ public class CamRotate : MonoBehaviour
     float x = Input.GetAxis("Mouse Y");
     float y = Input.GetAxis("Mouse X");
     //방향확인
+    //지금까지 각도에 민감도와 시간 보정 곱해서 더하기
     angle.x += x * sensitivity * Time.deltaTime; //조금만 움직여도 잘 회전하도록 민감도를 추가
     angle.y += y * sensitivity * Time.deltaTime;
-    angle.z = transform.eulerAngles.z;
+    angle.z = transform.eulerAngles.z; //축 고정
 
     //상하 각도 제한
     angle.x = Mathf.Clamp(angle.x, -90,90); //clamp는 범위 조절

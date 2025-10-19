@@ -9,7 +9,7 @@ public class VoxelMaker : MonoBehaviour
 
     public GameObject voxelFactory;
     float currentTime = 0; //자동 생성을 위한 시간
-    float createTime = 0.1f; //0.1초마다 자동 생성
+    float createTime = 0.1f; //0.1초마다 자동 생성, 생성의 기준이 되는 시간
 
     //메모리 누수방지를 위해 pool 생성
 
